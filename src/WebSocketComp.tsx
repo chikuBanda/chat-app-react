@@ -97,6 +97,7 @@ const WebSocketComp = ({ stream }: props) => {
     })
 
     peerConnection.addEventListener('connectionstatechange', event => {
+        console.log('connectionstatechange', event)
         if (peerConnection.connectionState === 'connected') {
             console.log("CONNECTED")
         }
