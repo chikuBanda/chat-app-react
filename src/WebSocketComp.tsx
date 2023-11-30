@@ -17,6 +17,7 @@ const WebSocketComp = ({ stream }: props) => {
     const [receiver, setReceiver] = useState('')
     const [chat, setChat] = useState<Message[]>([])
 
+    // deployed to render
     const socket = io('wss://chat-app-server-gmhe.onrender.com/events')
     const configuration = { 'iceServers': [{'urls': 'stun:stun.l.google.com:19302'}] }
     const peerConnection = new RTCPeerConnection(configuration)
