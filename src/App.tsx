@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import './App.css'
-import WebSocketComp from './WebSocketComp'
+import PeerConnectionComponent from './PeerConnectionComponent'
 
 const openMediaDevices = async (constraints: MediaStreamConstraints) => {
   return await navigator.mediaDevices.getUserMedia(constraints)
@@ -61,7 +61,7 @@ function App() {
       
       <br />
       <br />
-      <WebSocketComp stream={localStream} />
+      <PeerConnectionComponent stream={localStream} />
 
       <br /><br />
       <video hidden={!hasStream} ref={videoRef} autoPlay playsInline />
