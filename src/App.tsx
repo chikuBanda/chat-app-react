@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import './App.css'
 import PeerConnectionComponent from './PeerConnectionComponent'
 
-console.log('MY_VAR', import.meta.env.MY_VAR)
+console.log('MY_VAR', import.meta.env.VITE_MY_VAR)
 console.log('MODE', import.meta.env.MODE)
 console.log('PROD', import.meta.env.PROD)
 console.log('DEV', import.meta.env.DEV)
