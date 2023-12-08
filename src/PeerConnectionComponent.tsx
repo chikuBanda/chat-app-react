@@ -7,11 +7,18 @@ interface Message {
     message: string
 }
 
+interface IceServer {
+    urls: string,
+    username?: string,
+    credential?: string
+  }
+
 interface props {
     stream: MediaStream | null
+    iceServers: IceServer[]
 }
 
-const WebSocketComp = ({ stream }: props) => {
+const WebSocketComp = ({ stream, iceServers }: props) => {
     const [username, setUsername] = useState('')
     const [message, setMessage] = useState('')
     const [receiver, setReceiver] = useState('')
@@ -29,6 +36,15 @@ const WebSocketComp = ({ stream }: props) => {
             })
         }
     }, [ stream ])
+
+    useEffect(() => {
+        if (iceServers.length > 0) {
+            console.log('RECEIVED ICE SERVERS:', iceServers)
+            peerConnection.setConfiguration({
+                iceServers: iceServers
+            })
+        }
+    }, [iceServers])
 
     // receive message from the server
     socket.on("events", (arg: any) => {

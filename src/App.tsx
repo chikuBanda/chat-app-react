@@ -1,11 +1,18 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import PeerConnectionComponent from './PeerConnectionComponent'
+import axios, { AxiosResponse } from 'axios'
 
 console.log('MY_VAR', import.meta.env.VITE_MY_VAR)
 console.log('MODE', import.meta.env.MODE)
 console.log('PROD', import.meta.env.PROD)
 console.log('DEV', import.meta.env.DEV)
+
+interface IceServer {
+  urls: string,
+  username?: string,
+  credential?: string
+}
 
 const openMediaDevices = async (constraints: MediaStreamConstraints) => {
   return await navigator.mediaDevices.getUserMedia(constraints)
@@ -16,6 +23,16 @@ const openShareScreen = async (constraints: any) => {
 }
 
 function App() {
+  const iceServersUrl = 'https://chat-app-server-gmhe.onrender.com/chat/get_ice_servers'
+  const [iceServerList, setIceServerList] = useState<IceServer[]>([])
+  
+  useEffect(() => {
+    axios.get(iceServersUrl)
+      .then((response: AxiosResponse<IceServer[]>) => {
+        setIceServerList(response.data)
+      })
+  }, [])
+
   const videoRef = useRef<HTMLVideoElement>(null)
   const shareRef = useRef<HTMLVideoElement>(null)
 
@@ -66,7 +83,7 @@ function App() {
       
       <br />
       <br />
-      <PeerConnectionComponent stream={localStream} />
+      <PeerConnectionComponent stream={localStream} iceServers={iceServerList} />
 
       <br /><br />
       <video hidden={!hasStream} ref={videoRef} autoPlay playsInline />
