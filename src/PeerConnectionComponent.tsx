@@ -69,10 +69,13 @@ const WebSocketComp = ({ stream, iceServers }: props) => {
 
                 await peerConnection.setRemoteDescription(new RTCSessionDescription(arg.offer));
                 console.log('set offer as remote desc.')
+
                 const answer = await peerConnection.createAnswer();
                 console.log('created answer.')
+
                 await peerConnection.setLocalDescription(answer);
                 console.log('set answer as local desc.')
+
                 console.log('signaling state', peerConnection.signalingState)
 
                 sendMessage('answer', { answer });
@@ -86,16 +89,19 @@ const WebSocketComp = ({ stream, iceServers }: props) => {
     socket.on('answer', async (arg: any) => {
         console.log("received answer")
         console.log('answer message', arg)
+
         if (arg.answer) {
             console.log('signaling state', peerConnection.signalingState)
             const remoteDesc = new RTCSessionDescription(arg.answer)
+
             await peerConnection.setRemoteDescription(remoteDesc)
             console.log("set answer as remote desc")
+
             console.log('signaling state', peerConnection.signalingState)
         }
     })
 
-    socket.on('new-ice-candidate',async (arg: any) => {
+    socket.on('new-ice-candidate', async (arg: any) => {
         if (arg.ice_candidate) {
             try {
                 await peerConnection.addIceCandidate(arg.ice_candidate)
@@ -177,8 +183,12 @@ const WebSocketComp = ({ stream, iceServers }: props) => {
     }
 
     const makeCall = async () => {
-        const offer = await peerConnection.createOffer({ offerToReceiveAudio: true, offerToReceiveVideo: true })
+        const offer = await peerConnection.createOffer({
+            offerToReceiveAudio: true,
+            offerToReceiveVideo: true
+        })
         console.log('created offer')
+        
         await peerConnection.setLocalDescription(offer)
         console.log('set offer as local desc')
 
