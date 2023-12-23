@@ -1,7 +1,7 @@
 import { LockOpen } from "@mui/icons-material"
 import { TextField, Checkbox, FormControlLabel, Button } from "@mui/material"
 import { Link } from "react-router-dom"
-import { loginWithEmailPassword } from "./handlers/auth"
+import { loginWithEmailPassword } from "../../utils/handlers/auth"
 import { useState } from "react"
 import SocialAuthComponent from "./SocialAuthComponent"
 
@@ -20,7 +20,7 @@ const LoginComponent = () => {
 
     return (
         <>
-            <div className="grid grid-cols-12 h-screen">
+            <div className="grid grid-cols-12 h-screen m-0">
                 <div className="hidden md:block col-span-7 bg-[url('/img/car-3046424_1280.jpg')] h-full"></div>
                 <div className="col-span-12 md:col-span-5 h-full pt-10 px-14">
                     <div className="flex justify-center">

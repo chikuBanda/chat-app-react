@@ -51,9 +51,12 @@ const requestPermission = () => {
   })
 }
 
-onMessage(messaging, (payload) => {
-  console.log("FCM Message received", payload)
-})
+const onMessageListener = () =>
+  new Promise((resolve) => {
+    onMessage(messaging, (payload) => {
+      resolve(payload);
+    });
+});
 
 
-export { db, analytics, auth, messaging, requestPermission }
+export { db, analytics, auth, messaging, requestPermission, onMessageListener }
