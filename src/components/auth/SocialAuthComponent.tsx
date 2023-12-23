@@ -1,13 +1,19 @@
 import { Facebook, GitHub, Google } from "@mui/icons-material"
 import { Button } from "@mui/material"
-import { signInWithGoogle } from "./handlers/auth"
-import { requestPermission  } from './firebase/firebase'
+import { signInWithGoogle } from "../../utils/handlers/auth"
+import { requestPermission  } from '../../firebase/firebase'
+import useAuthStore from "../../stores/auth"
+import { useNavigate } from "react-router-dom"
 
 const SocialAuthComponent = () => {
+    const setLoggedInState = useAuthStore((state) => state.setLoggedInState)
+    const navigate = useNavigate()
     const signUpGoogle = async () => {
         try {
             const user = await signInWithGoogle()
             console.log("signed up with google", user)
+            setLoggedInState(true)
+            navigate('/')
             requestPermission()
         } catch (error: any) {
             console.log("error registering user with google", error)

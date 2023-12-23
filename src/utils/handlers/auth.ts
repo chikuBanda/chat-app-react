@@ -4,7 +4,7 @@ import {
     GoogleAuthProvider,
     signInWithPopup
  } from 'firebase/auth'
-import { auth } from '../firebase/firebase'
+import { auth } from '../../firebase/firebase'
 
 const loginWithEmailPassword = async (email: string, password: string) => {
     console.log('email', email)

@@ -1,6 +1,6 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import { db } from '../firebase/firebase'
-import { User } from "../interfaces/user";
+import { db } from '../../firebase/firebase'
+import { User } from "../../models/interfaces/user";
 
 const ref = collection(db, "users")
 
@@ -25,3 +25,11 @@ export const getUsers = async () => {
 
     return users
 }
+
+// export const unsubusers = onSnapshot(ref, (snapshot) => {
+//     let users: any[] = [];
+//     snapshot.forEach((doc) => {
+//         users.push(doc.data());
+//     });
+//     console.log("Current users: ", users);
+// })
