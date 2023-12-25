@@ -10,14 +10,12 @@ const HomeComponent = () => {
                     <div className="col-span-1 h-full overflow-hidden">
                         <SideBarComponent />
                     </div>
-                    <main className="col-span-6 h-full relative">
-                        <div className="absolute top-0 left-0 w-full">
+                    <main className="col-span-6 h-full flex flex-col overflow-hidden">
+                        <div className="max-w-full">
                             <HeaderComponent />
                         </div>
-                        <div className="col-span-6 overflow-auto max-h-screen">
-                            <div className="px-5 pt-20">
-                                <Outlet />
-                            </div>
+                        <div className="col-span-6 px-5 pt-5 overflow-auto h-full">
+                            <Outlet />
                         </div>
                     </main>
                 </div>

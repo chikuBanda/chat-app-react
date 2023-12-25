@@ -7,7 +7,7 @@ const SideBarComponent = () => {
     return (
         <>
             <div className='h-full bg-cyan-950'>
-                <div className='pt-10 pl-10'>
+                <div className='pt-7 pl-7'>
                     <img src={ViteImg} alt="" width={ '50' } />
                 </div>
 

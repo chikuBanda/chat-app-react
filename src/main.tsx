@@ -17,7 +17,7 @@ import { TestFirebase } from './components/TestFirebase.tsx'
 import AuthComponent from './components/auth/AuthComponent.tsx';
 import LoginComponent from './components/auth/LoginComponent.tsx'
 import SignUpComponent from './components/auth/SignUpComponent.tsx';
-import ChatComponent from './components/ChatComponent.tsx';
+import ChatComponent from './components/chat/ChatComponent.tsx';
 import ProtectedRoute from './components/shared/ProtectedRoute.tsx';
 import HomeComponent from './components/HomeComponent.tsx';
 
