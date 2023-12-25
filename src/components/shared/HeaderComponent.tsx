@@ -179,7 +179,7 @@ export default function HeaderComponent () {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar className='bg-white text-slate-900' position="static">
+      <AppBar className='bg-white text-slate-900 z-50' position="static">
         <Toolbar>
           <IconButton
             size="large"
