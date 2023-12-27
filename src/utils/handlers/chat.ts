@@ -1,6 +1,6 @@
-import { addDoc, collection, getDocs, getDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs, getDoc, doc, updateDoc, deleteDoc, arrayUnion } from "firebase/firestore";
 import { db } from '../../firebase/firebase'
-import { IConversation } from "../../models/interfaces/interfaces";
+import { IConversation, IMessage } from "../../models/interfaces/interfaces";
 
 const ref = collection(db, "conversations")
 
@@ -27,5 +27,17 @@ export const updateConversation = async (id: string, conversation: any) => {
 
 export const deleteConversation = async (id: string) => {
   const data = await deleteDoc(doc(db, "conversations", id))
+  return data
+}
+
+export const sendTextMessage = async (conversation_id: string, message: IMessage) => {
+  const data = await updateDoc(doc(db, "conversations", conversation_id), {
+    messages: arrayUnion(message)
+  })
+
+  await updateDoc(doc(db, "conversations", conversation_id), {
+    last_message: message
+  })
+  
   return data
 }

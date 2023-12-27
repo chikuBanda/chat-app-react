@@ -1,4 +1,5 @@
 import { User } from "./user"
+import { Timestamp } from "firebase/firestore";
 
 export interface IConversation {
     id: string
@@ -10,7 +11,7 @@ export interface IConversation {
 
 export interface IMessage {
     content: string
-    time_sent: string
+    time_sent: string | Timestamp
     sender_id: string
     receiver_id: string
 }

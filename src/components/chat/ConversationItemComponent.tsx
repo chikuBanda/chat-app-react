@@ -23,8 +23,8 @@ const ConversationItemComponent = ({conversation}: {conversation: IConversation}
                     <Avatar src={ otherUser?.photoURL || '' } />
                 </div>
                 <div className="relative font-sans w-full">
-                    <h4 className='my-0 text-slate-800 font-bold'><span> { conversation.last_message?.sender_id === user?.uid ? 'You: ' : '' } </span>{ otherUser?.displayName || '' }</h4>
-                    <p className='my-0 text-slate-600'>{ conversation.last_message?.content || '' }</p> 
+                    <h4 className='my-0 text-slate-800 font-bold'>{ otherUser?.displayName || '' }</h4>
+                    <p className='my-0 text-slate-600'><span> { conversation.last_message?.sender_id === user?.uid ? 'You: ' : '' } </span> { conversation.last_message?.content || '' }</p> 
                     <small className='absolute top-0 end-2'>11:55</small>
                 </div>
             </div>

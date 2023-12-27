@@ -1,18 +1,25 @@
 import { LockOpen } from "@mui/icons-material"
 import { TextField, Checkbox, FormControlLabel, Button } from "@mui/material"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { loginWithEmailPassword } from "../../utils/handlers/auth"
 import { useState } from "react"
 import SocialAuthComponent from "./SocialAuthComponent"
+import useAuthStore from "../../stores/auth"
+import { requestPermission } from "../../firebase/firebase"
 
 const LoginComponent = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+    const setLoggedInState = useAuthStore((state) => state.setLoggedInState)
 
     const login = async () => {
         try {
             const user = await loginWithEmailPassword(email, password)
             console.log("Logged in user", user)
+            setLoggedInState(true)
+            requestPermission()
+            navigate('/')
         } catch(error: any) {
             console.log("Error logging in user", error)
         }
