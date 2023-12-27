@@ -1,9 +1,13 @@
 import { Person } from "@mui/icons-material"
 import { TextField, Button } from "@mui/material"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { signUpWithEmailPassword } from "../../utils/handlers/auth"
 import SocialAuthComponent from "./SocialAuthComponent"
+import { addUser, getUserByUid } from "../../utils/handlers/user"
+import useAuthStore from "../../stores/auth"
+import { User } from "../../models/interfaces/user"
+import { requestPermission } from "../../firebase/firebase"
 
 const SignUpComponent = () => {
     const [first_name, setFirstName] = useState('')
@@ -11,15 +15,54 @@ const SignUpComponent = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirm_password, setConfirmPassword] = useState('')
+    const setLoggedInState = useAuthStore((state) => state.setLoggedInState)
+    const navigate = useNavigate()
 
     const signUp = async () => {
         signUpWithEmailPassword(email, password)
             .then((user) => {
                 console.log("registered user", user)
+
+                setLoggedInState(true)
+                const userData: User = {
+                    uid: user.uid,
+                    displayName: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL,
+                }
+
+                requestPermission()
+
+                checkIfUserExists(user.uid)
+                    .then((userWithUidExists) => {
+                        if (userWithUidExists) {
+                            console.log("user already exists")
+                            navigate('/')
+                            return
+                        }
+
+                        addUser(userData) // add user to firestore
+                            .then((result) => {
+                                console.log("added user to firestore", result)
+                                navigate('/')
+                            })
+                            .catch((error: any) => {
+                                console.log('Error', error)
+                            })
+                    })
+                    .catch((error) => {
+                        console.error('Error', error)
+                    })   
             })
             .catch((error: any) => {
                 console.log("error registering user", error)
             })
+    }
+
+    const checkIfUserExists = async (uid: string) => {
+        const user = await getUserByUid(uid)
+        console.log('checking if user exists', user)
+        return user !== null
     }
 
     return (
@@ -33,57 +76,57 @@ const SignUpComponent = () => {
                         </div>
                     </div>
 
-                    <form onSubmit={(e) => {e.preventDefault();signUp()}}>
+                    <form onSubmit={(e) => { e.preventDefault(); signUp() }}>
                         <h3 className="text-center">Sign up</h3>
 
                         <div className="mt-4 grid grid-cols-12">
-                            <TextField 
+                            <TextField
                                 className="col-span-6 mr-2"
                                 id="sign_up_first_name"
-                                name="first_name" 
+                                name="first_name"
                                 label="First name*"
-                                type="text" 
+                                type="text"
                                 variant="outlined"
                                 value={first_name}
                                 onChange={(e) => setFirstName(e.target.value)} />
 
-                            <TextField 
+                            <TextField
                                 className="col-span-6"
                                 id="sign_up_last_name"
-                                name="last_name" 
+                                name="last_name"
                                 label="Last name*"
-                                type="text" 
+                                type="text"
                                 variant="outlined"
                                 value={last_name}
                                 onChange={(e) => setLastName(e.target.value)} />
                         </div>
 
                         <div className="mt-4">
-                            <TextField 
+                            <TextField
                                 className="w-full"
                                 id="sign_up_email"
-                                name="email" 
+                                name="email"
                                 label="Email Address*"
-                                type="email" 
+                                type="email"
                                 variant="outlined"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)} />
                         </div>
 
                         <div className="mt-6 grid grid-cols-12">
-                            <TextField 
+                            <TextField
                                 className="col-span-6 mr-2"
-                                id="sign_up_password" 
+                                id="sign_up_password"
                                 name="password"
                                 label="Password*"
                                 type="password"
                                 variant="outlined"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)} />
-                            
-                            <TextField 
+
+                            <TextField
                                 className="col-span-6"
-                                id="sign_up_confirm_password" 
+                                id="sign_up_confirm_password"
                                 name="confirm_password"
                                 label="Confirm Password*"
                                 type="password"
@@ -94,7 +137,7 @@ const SignUpComponent = () => {
 
                         <div className="mt-4">
                             <Button
-                                className="w-full" 
+                                className="w-full"
                                 type="submit"
                                 variant="contained">Sign up</Button>
                         </div>

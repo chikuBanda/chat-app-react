@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where, orderBy, limit } from "firebase/firestore";
 import { db } from '../../firebase/firebase'
 import { User } from "../../models/interfaces/user";
 
@@ -24,6 +24,26 @@ export const getUsers = async () => {
     })
 
     return users
+}
+
+export const getUserByUid = async (uid: string) => {
+    console.log('uid', uid)
+    const q = query(ref, where("uid", "==", uid), orderBy('uid'), limit(1))
+
+    const querySnapshot = await getDocs(q);
+    
+    if (!querySnapshot.empty) {
+        let user
+        querySnapshot.forEach((doc) => {
+            user = doc.data()
+        })
+        console.log("Document data:", user);
+        return user
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+        return null
+    }
 }
 
 // export const unsubusers = onSnapshot(ref, (snapshot) => {

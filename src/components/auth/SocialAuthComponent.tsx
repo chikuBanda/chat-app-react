@@ -4,20 +4,47 @@ import { signInWithGoogle } from "../../utils/handlers/auth"
 import { requestPermission  } from '../../firebase/firebase'
 import useAuthStore from "../../stores/auth"
 import { useNavigate } from "react-router-dom"
+import { User as FirebaseUser } from "firebase/auth"
+import { User } from "../../models/interfaces/user"
+import { addUser, getUserByUid } from "../../utils/handlers/user"
 
 const SocialAuthComponent = () => {
     const setLoggedInState = useAuthStore((state) => state.setLoggedInState)
     const navigate = useNavigate()
     const signUpGoogle = async () => {
         try {
-            const user = await signInWithGoogle()
+            const user: FirebaseUser = await signInWithGoogle()
             console.log("signed up with google", user)
+            console.log("user", user)
             setLoggedInState(true)
-            navigate('/')
+            const userData: User = {
+                uid: user.uid,
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+            }
+
             requestPermission()
+
+            const userWithUidExists = await checkIfUserExists(user.uid)
+            if (userWithUidExists) {
+                console.log("user already exists")
+                navigate('/')
+                return
+            } else {
+                await addUser(userData) // add user to firestore
+                console.log("added user to firestore")
+                navigate('/')
+            }
         } catch (error: any) {
             console.log("error registering user with google", error)
         }
+    }
+
+    const checkIfUserExists = async (uid: string) => {
+        const user = await getUserByUid(uid)
+        console.log('checking if user exists', user)
+        return user !== null
     }
 
     return (

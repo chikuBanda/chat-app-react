@@ -2,7 +2,8 @@ import {
     signInWithEmailAndPassword, 
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
-    signInWithPopup
+    signInWithPopup,
+    User
  } from 'firebase/auth'
 import { auth } from '../../firebase/firebase'
 
@@ -45,7 +46,7 @@ const signInWithGoogle = async () => {
             const user = result.user
         
             console.log('signed in user', user)
-            return Promise.resolve(user)
+            return Promise.resolve(user) as Promise<User>
         })
         .catch((error) => {
             // const errorCode = error.code
