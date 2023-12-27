@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { addUser, getUsers } from '../utils/handlers/user'
+import { getUsers } from '../utils/handlers/user'
 import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../firebase/firebase"
 import useMessageStore from "../stores/messages"
@@ -37,11 +37,11 @@ export const TestFirebase = () => {
     }, [])
 
     const onAddUser = async () => {
-        await addUser({
-            first_name,
-            last_name,
-            occupation
-        })
+        // await addUser({
+        //     first_name,
+        //     last_name,
+        //     occupation
+        // })
 
         await fetchUsers()
     }

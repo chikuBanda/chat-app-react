@@ -1,81 +1,36 @@
-// import { useEffect, useRef, useState } from 'react'
 import '../App.css'
-// import axios, { AxiosResponse } from 'axios'
 import ConversationListComponent from './ConversationListComponent'
 import avatarImg from '../../assets/avatar.jpg'
 import { Avatar } from '@mui/material'
 import { MoreHoriz } from '@mui/icons-material'
 import MessageWindowComponent from './MessageWindowComponent'
+import useAuthStore from '../../stores/auth'
+import { User } from 'firebase/auth'
+import { useEffect } from 'react'
+import { getConversations } from '../../utils/handlers/chat'
+import useChatStore from '../../stores/chat'
 
 console.log('MY_VAR', import.meta.env.VITE_MY_VAR)
 console.log('MODE', import.meta.env.MODE)
 console.log('PROD', import.meta.env.PROD)
 console.log('DEV', import.meta.env.DEV)
 
-// interface IceServer {
-//   urls: string,
-//   username?: string,
-//   credential?: string
-// }
-
-// const openMediaDevices = async (constraints: MediaStreamConstraints) => {
-//   return await navigator.mediaDevices.getUserMedia(constraints)
-// }
-
-// const openShareScreen = async (constraints: any) => {
-//   return await navigator.mediaDevices.getDisplayMedia(constraints)
-// }
-
 const ChatComponent = () => {
-  // const iceServersUrl = 'https://chat-app-server-gmhe.onrender.com/chat/get_ice_servers'
-  // const [iceServerList, setIceServerList] = useState<IceServer[]>([])
-  
-  // useEffect(() => {
-  //   axios.get(iceServersUrl)
-  //     .then((response: AxiosResponse<IceServer[]>) => {
-  //       setIceServerList(response.data)
-  //     })
-  // }, [])
+  const user: User | null = useAuthStore(state => state.authenticatedUser)
+  const setConversations = useChatStore((state) => state.setConversations)
+  const setActiveConversation = useChatStore(state => state.setActiveConversation)
 
-  // const videoRef = useRef<HTMLVideoElement>(null)
-  // const shareRef = useRef<HTMLVideoElement>(null)
 
-  // const [hasStream, setHasStream] = useState(false)
-  // const [hasShareStream, setHasShareStream] = useState(false)
-  // const [localStream, setLocalStream] = useState<MediaStream | null>(null)
-
-  // const onClick = async () => {
-  //   try {
-  //     const stream = await openMediaDevices({ 'video': true, 'audio': true })
-  //     console.log('Got MediaStream', stream)
-  //     if (videoRef.current) {
-  //       setHasStream(true)
-  //       setLocalStream(stream)
-  //       videoRef.current.srcObject = stream
-  //     }
-  //   } catch (error) {
-  //     console.error('Error accessing media devices', error)
-  //   }
-  // }
-
-  // const onClickShare = async () => {
-  //   try {
-  //     const stream = await openShareScreen({
-  //       video: {
-  //         cursor: 'always',
-  //         displaySurface: 'monitor'
-  //       }
-  //     })
-
-  //     console.log('Got share stream', stream)
-  //     if (shareRef.current) {
-  //       setHasShareStream(true)
-  //       shareRef.current.srcObject = stream
-  //     }
-  //   } catch (error) {
-  //     console.error('Error accessing media devices', error)
-  //   }
-  // }
+  useEffect(() => {
+    if (!user) return
+    getConversations(user.uid)
+      .then(data => {
+        setConversations(data)
+      })
+    return (() => {
+      setActiveConversation(null)
+    })
+  }, [])
   
   return (
     <>
