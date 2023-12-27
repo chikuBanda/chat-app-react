@@ -43,7 +43,7 @@ const SignUpComponent = () => {
 
                         addUser(userData) // add user to firestore
                             .then((result) => {
-                                console.log("added user to firestore")
+                                console.log("added user to firestore", result)
                                 navigate('/')
                             })
                             .catch((error: any) => {
