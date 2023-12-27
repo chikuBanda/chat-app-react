@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, getDoc, doc, query, where, orderBy, limit } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where, orderBy, limit } from "firebase/firestore";
 import { db } from '../../firebase/firebase'
 import { User } from "../../models/interfaces/user";
 
