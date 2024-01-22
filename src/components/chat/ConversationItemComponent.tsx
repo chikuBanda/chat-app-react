@@ -13,6 +13,7 @@ const ConversationItemComponent = ({conversation}: {conversation: IConversation}
 
     useEffect(() => {
         console.log('otherUser', otherUser)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

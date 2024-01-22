@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 interface Props {
     title: string
-    Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {muiName: string;}
+    Icon: OverridableComponent<SvgIconTypeMap<unknown, "svg">> & {muiName: string;}
     to: string
 }
 

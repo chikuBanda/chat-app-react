@@ -20,6 +20,7 @@ import SignUpComponent from './components/auth/SignUpComponent.tsx';
 import ChatComponent from './components/chat/ChatComponent.tsx';
 import ProtectedRoute from './components/shared/ProtectedRoute.tsx';
 import HomeComponent from './components/HomeComponent.tsx';
+import CallRoomComponent from './components/chat/CallRoomComponent.tsx';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
           {
             path: 'chat',
             element: <ChatComponent />
+          },
+          {
+            path: 'call-room',
+            element: <CallRoomComponent />
           }
         ]
       }
@@ -63,8 +68,9 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    {/* <App /> */}
-    <RouterProvider router={ router } />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  //   {/* <App /> */}
+  //   <RouterProvider router={ router } />
+  // </React.StrictMode>,
+  <RouterProvider router={ router } />
 )

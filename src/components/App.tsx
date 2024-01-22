@@ -7,6 +7,8 @@ import useAuthStore from "../stores/auth";
 const App = () => {
   const navigate = useNavigate()
   const setAuthenticatedUser = useAuthStore((state) => state.setAuthenticatedUser)
+
+  console.log('in app')
   
   onMessageListener().then(payload => {
     console.log(payload);
@@ -23,6 +25,7 @@ const App = () => {
       
       setAuthenticatedUser(user)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
