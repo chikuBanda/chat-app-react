@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-// @ts-ignore
+// @ts-expect-error: Dependency is there
 import type {} from '@redux-devtools/extension' // required for devtools typing
 import { IConversation, IMessage } from "../models/interfaces/interfaces";
 
@@ -26,7 +26,7 @@ const useChatStore = create<ChatState>() (
                     conversations: conversations
                 })),
                 setMessages: (messages: IMessage[]) => set((state) => {
-                    let activeConversation = state.activeConversation
+                    const activeConversation = state.activeConversation
                     if (activeConversation) {
                         activeConversation.messages = messages
                     }
@@ -41,7 +41,7 @@ const useChatStore = create<ChatState>() (
                     console.log('replaceConversations', conversations)
 
                     conversations.forEach(conversation => {
-                        let index = conversationsCopy.findIndex(c => c.id === conversation.id)
+                        const index = conversationsCopy.findIndex(c => c.id === conversation.id)
                         if (index !== -1) {
                             conversationsCopy[index] = conversation
                             if (state.activeConversation?.id === conversation.id) {

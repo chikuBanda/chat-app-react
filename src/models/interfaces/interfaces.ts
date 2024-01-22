@@ -15,3 +15,9 @@ export interface IMessage {
     sender_id: string
     receiver_id: string
 }
+
+export interface IceServer {
+    urls: string,
+    username?: string,
+    credential?: string
+}

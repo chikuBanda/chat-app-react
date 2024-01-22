@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-// @ts-ignore
+// @ts-expect-error: Dependency is there
 import type {} from '@redux-devtools/extension' // required for devtools typing
 
 interface MessageState {

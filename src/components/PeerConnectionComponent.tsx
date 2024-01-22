@@ -11,7 +11,7 @@ interface IceServer {
     urls: string,
     username?: string,
     credential?: string
-  }
+}
 
 interface props {
     stream: MediaStream | null
