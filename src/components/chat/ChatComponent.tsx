@@ -30,6 +30,7 @@ const ChatComponent = () => {
     return (() => {
       setActiveConversation(null)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   return (
