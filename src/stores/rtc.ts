@@ -20,7 +20,9 @@ interface RtcState {
     callerId: string | null,
     setCallerId: (callerId: string) => void,
     calleeId: string | null,
-    setCalleeId: (calleeId: string) => void
+    setCalleeId: (calleeId: string) => void,
+    ringtone: HTMLAudioElement | null,
+    setRingtone: (ringtone: HTMLAudioElement) => void
 }
 
 const useRtcStore = create<RtcState>((set) => ({
@@ -32,6 +34,8 @@ const useRtcStore = create<RtcState>((set) => ({
     callStatus: 'none',
     callerId: null,
     calleeId: null,
+    ringtone: null,
+    setRingtone: (ringtone: HTMLAudioElement) => set(() => ({ ringtone })),
     setCallerId: (callerId: string) => set(() => ({ callerId })),
     setCalleeId: (calleeId: string) => set(() => ({ calleeId })),
     setSignalingServerSocketConnection: (socket: Socket | null) => set((state) => {

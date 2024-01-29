@@ -12,6 +12,7 @@ import axios, { AxiosResponse } from "axios";
 import { io } from "socket.io-client";
 import { Dialog, Button, DialogContent, DialogContentText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import audioRingtone from "../assets/ringtone.mp3"
 
 const signalingServerUrl = import.meta.env.VITE_SIGNALING_SERVER_URL;
 
@@ -34,6 +35,8 @@ const HomeComponent = () => {
     const setCallStatus = useRtcStore((state) => state.setCallStatus)
     const setCalleeId = useRtcStore((state) => state.setCalleeId)
     const setCallerId = useRtcStore((state) => state.setCallerId)
+    const ringtone = useRtcStore((state) => state.ringtone)
+    const setRingtone = useRtcStore((state) => state.setRingtone)
 
     const navigate = useNavigate()
 
@@ -49,6 +52,8 @@ const HomeComponent = () => {
                 console.log('received call')
                 setCaller({ name: arg.caller_name, id: arg.sender_id })
                 setOpen(true)
+                setRingtone(new Audio(audioRingtone))
+                ringtone?.play()
             })
         })
     }
@@ -136,10 +141,12 @@ const HomeComponent = () => {
 
     const handleClose = () => {
         setOpen(false);
+
     };
 
     const handleAcceptCall = async () => {
         setOpen(false)
+        ringtone?.pause()
 
         console.log('getting media stream')
         await getLocalMediaStream()
