@@ -1,5 +1,5 @@
 import './Sidebar.css'
-import ViteImg from '../assets/react.svg'
+import ViteImg from '../assets/img/react.svg'
 import { Dashboard, Chat } from '@mui/icons-material'
 import SidebarLink from './SidebarLink'
 

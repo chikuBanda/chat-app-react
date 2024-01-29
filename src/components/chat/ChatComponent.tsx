@@ -1,6 +1,6 @@
 import '../App.css'
 import ConversationListComponent from './ConversationListComponent'
-import avatarImg from '../../assets/avatar.jpg'
+import avatarImg from '../../assets/img/avatar.jpg'
 import { Avatar } from '@mui/material'
 import { MoreHoriz } from '@mui/icons-material'
 import MessageWindowComponent from './MessageWindowComponent'
@@ -30,6 +30,7 @@ const ChatComponent = () => {
     return (() => {
       setActiveConversation(null)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   return (
