@@ -52,7 +52,6 @@ const HomeComponent = () => {
                 console.log('received call')
                 setCaller({ name: arg.caller_name, id: arg.sender_id })
                 setOpen(true)
-                setRingtone(new Audio(audioRingtone))
                 ringtone?.play()
             })
         })
@@ -124,6 +123,9 @@ const HomeComponent = () => {
                     },
                 ])
             })
+
+        // set ringtone
+        setRingtone(new Audio(audioRingtone))
 
         initializeSocketEvents()
 
