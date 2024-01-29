@@ -12,7 +12,7 @@ import axios, { AxiosResponse } from "axios";
 import { io } from "socket.io-client";
 import { Dialog, Button, DialogContent, DialogContentText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import audioRingtone from "../assets/ringtone.mp3"
+import audioRingtone from "../assets/sounds/ringtones/zapsplat_multimedia_ringtone_mallets_marimba_smartphone_005_84894.mp3"
 
 const signalingServerUrl = import.meta.env.VITE_SIGNALING_SERVER_URL;
 
